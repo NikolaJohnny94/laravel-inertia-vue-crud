@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.p-datatable .p-paginator {
+    background-color: #1a202c !important;
+}
