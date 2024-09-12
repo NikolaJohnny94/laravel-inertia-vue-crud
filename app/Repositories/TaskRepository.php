@@ -19,6 +19,9 @@ class TaskRepository
     public function findTaskById(string $id)
     {
         return Task::find($id);
+        // $task = Task::where('id', $id)
+        // ->where('slug', $slug)
+        // ->firstOrFail();
     }
 
     public function updateTask(Task $task, array $data)
