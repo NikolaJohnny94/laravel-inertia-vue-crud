@@ -1,2 +1,1 @@
-export * from "./task/TaskSchema.type";
-export * from "./task/Task.type";
+export * from "./task_related";

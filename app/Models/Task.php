@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Task extends Model
 {
-    protected $fillable = ['title', 'description', 'category', 'finished', 'user_id'];
+    protected $fillable = ['title', 'description', 'category', 'finished', 'user_id', 'slug'];
 
     use HasFactory;
 
@@ -22,6 +22,10 @@ class Task extends Model
         parent::boot();
 
         static::creating(function ($task) {
+            $task->slug = Str::slug($task->title);
+        });
+
+        static::updating(function ($task) {
             $task->slug = Str::slug($task->title);
         });
     }

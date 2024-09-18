@@ -1,13 +1,15 @@
+import "primeicons/primeicons.css";
 import "./bootstrap";
 import "../css/app.css";
+
 import { createApp, h, DefineComponent } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import PrimeVue from "primevue/config";
+import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import Aura from "@primevue/themes/aura";
-import ToastService from "primevue/toastservice";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 

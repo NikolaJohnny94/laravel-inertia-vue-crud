@@ -3,12 +3,24 @@
 namespace App\Repositories;
 
 use App\Models\Task;
+use App\Utils\TaskUtils;
+use App\Utils\UserUtils;
+
 
 class TaskRepository
 {
+
+    protected $userUtils;
+
+    public function __construct(UserUtils $userUtils)
+    {
+        $this->userUtils = $userUtils;
+    }
     public function getAllTasks()
     {
-        return Task::all();
+        $user = $this->userUtils->getCurrentUser();
+        $tasks = Task::where('user_id', $user->id)->get();
+        return $tasks;
     }
 
     public function createTask(array $data)
@@ -18,19 +30,24 @@ class TaskRepository
 
     public function findTaskById(string $id)
     {
-        return Task::find($id);
-        // $task = Task::where('id', $id)
-        // ->where('slug', $slug)
-        // ->firstOrFail();
+        $user = $this->userUtils->getCurrentUser();
+        $task = Task::where('id', $id)->where('user_id', $user->id)->first();
+
+        if (!$task)
+            TaskUtils::handleTaskNotFound($id);
+
+        return $task;
     }
 
-    public function updateTask(Task $task, array $data)
+    public function updateTask($id, array $data)
     {
+        $task = $this->findTaskById($id);
         $task->update($data);
     }
 
-    public function deleteTask(Task $task)
+    public function deleteTask(string $id)
     {
+        $task = $this->findTaskById($id);
         $task->delete();
     }
 }
