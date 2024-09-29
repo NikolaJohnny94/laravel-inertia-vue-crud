@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
-    Route::get('/tasks/{id}-{slug}', [TaskController::class, 'show'])->name('tasks.show');
+    Route::get('/tasks/{id}/{slug}', [TaskController::class, 'show'])->name('tasks.show')->where(['id' => '[0-9]+', 'slug' => '[a-zA-Z0-9-]+']);
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
     Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');

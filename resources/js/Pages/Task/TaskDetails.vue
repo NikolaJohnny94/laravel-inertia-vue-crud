@@ -26,7 +26,7 @@
             <!-- Modal -->
             <Modal v-model:action="action" v-model="visible" v-model:task="taskToUpdate"
                 v-model:taskIdToDelete="taskIdToDelete" :deletingFromDetailspage="true" />
-            <Link :href="route('tasks', { page: currentPage })"
+            <Link :href="route('tasks', { page: previousPageData.page })"
                 class="w-[100px] !text-white mt-3 ml-6 !bg-blue-400 p-3 rounded-md flex justify-center items-center">
             <i class="pi pi-arrow-left mr-1"></i>Back
             </Link>
@@ -38,12 +38,12 @@
 
 <script setup lang="ts">
 //Core
-import { onUpdated, ref, watch } from "vue";
+import { onUpdated, ref } from "vue";
 // VueUse
 import { useStorage } from '@vueuse/core'
 // Inertia.js
 import { Head, Link, router } from "@inertiajs/vue3";
-// Primevue
+// PrimeVue
 import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 // Layout and components
@@ -58,12 +58,14 @@ const { task } = defineProps<{
 }>();
 
 // Refs
-const currentPage = useStorage('currentPage', 1)
 const visible = ref(false);
 const action = ref("edit" as ModalAction);
 const taskIdToDelete = ref<number>()
 const taskToUpdate = ref({} as Task);
 const hasRunOnce = ref(false);
+
+// Composables
+const previousPageData = useStorage('previousPageData', { page: 1, rowsPerPage: 5, })
 
 // Methods
 const showEditModal = () => {
@@ -87,9 +89,7 @@ const showDeleteModal = () => {
 }
 
 // Convertting a date to a string by using the current or specified locale.
-const formattedDate = (date: Date) => {
-    return new Date(date).toLocaleDateString()
-}
+const formattedDate = (date: Date) => new Date(date).toLocaleDateString()
 
 // Hooks
 onUpdated(() => {

@@ -55,7 +55,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id, string $slug)
     {
         $task = $this->taskRepository->findTaskById($id);
         return Inertia::render('Task/TaskDetails', ['task' => $task]);

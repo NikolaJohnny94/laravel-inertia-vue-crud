@@ -126,8 +126,13 @@ const submit = () => {
     if (action.value === 'edit' && task.value) {
         form.put(`/tasks/${task.value.id}`, {
             onSuccess: () => {
-                // Calling showToast method with 'edit' action value
-                showToast('edit')
+                // Calling showToast method with 'edit' action value if task is updated
+                if (task.value?.title !== form.title ||
+                    task.value?.description !== form.description ||
+                    task.value?.category !== selectedCategory.value.value ||
+                    task.value.finished !== form.finished) {
+                    showToast('edit')
+                }
                 // Setting modal visible to false
                 visible.value = false
             }
@@ -138,6 +143,7 @@ const submit = () => {
         // If delete action is performed from details page navigate to tasks page and after one second perform delete aciton
         if (deletingFromDetailspage) {
             router.visit(route('tasks'))
+            localStorage.setItem('deletedFromDetailsPage', 'true')
 
             setTimeout(() => {
                 form.delete(`/tasks/${taskIdToDelete.value}`, {

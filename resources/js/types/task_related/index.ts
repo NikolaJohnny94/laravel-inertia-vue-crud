@@ -4,3 +4,4 @@ export * from "./Task.type";
 export * from "./TaskSchema.type";
 export * from "./TaskForm.type";
 export * from "./SelectedCategory.type";
+export * from "./PaginationData";

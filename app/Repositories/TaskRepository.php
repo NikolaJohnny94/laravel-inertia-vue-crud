@@ -28,7 +28,7 @@ class TaskRepository
         return Task::create($data);
     }
 
-    public function findTaskById(string $id)
+    public function findTaskById(int $id)
     {
         $user = $this->userUtils->getCurrentUser();
         $task = Task::where('id', $id)->where('user_id', $user->id)->first();
@@ -39,13 +39,13 @@ class TaskRepository
         return $task;
     }
 
-    public function updateTask($id, array $data)
+    public function updateTask(int $id, array $data)
     {
         $task = $this->findTaskById($id);
         $task->update($data);
     }
 
-    public function deleteTask(string $id)
+    public function deleteTask(int $id)
     {
         $task = $this->findTaskById($id);
         $task->delete();
